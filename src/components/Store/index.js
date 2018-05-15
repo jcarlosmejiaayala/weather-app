@@ -1,18 +1,20 @@
-import React, {Component, createContext, Children, cloneElement} from 'react'
+import React, {Component, createContext} from 'react'
 
 const DEFAULT_STATE = {}
 
 const Context = createContext(DEFAULT_STATE)
 
-const Consumer = ({children}) => (
-    <Context.Consumer>
-        {context => Children.map(children, child => cloneElement(child, {
-            ...context
-        }))}
-    </Context.Consumer>
-)
+export const Consumer = Mixin => class extends Component {
+    render() {
+        return (
+            <Context.Consumer>
+                {context => <Mixin {...context}/>}
+            </Context.Consumer>
+        )
+    }
+}
 
-class Provider extends Component {
+export default class Provider extends Component {
     state = DEFAULT_STATE
 
     render() {
@@ -24,9 +26,4 @@ class Provider extends Component {
             </Context.Provider>
         )
     }
-}
-
-export default {
-    Consumer,
-    Provider
 }
