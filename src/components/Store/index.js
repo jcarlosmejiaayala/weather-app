@@ -16,11 +16,13 @@ class Provider extends Component {
     state = DEFAULT_STATE
 
     render() {
-        return <Context.Provider value={{
-            ...this.state
-        }}>
-            {this.props.children}
-        </Context.Provider>
+        return (
+            <Context.Provider value={{
+                ...this.state
+            }}>
+                {this.props.children}
+            </Context.Provider>
+        )
     }
 }
 
