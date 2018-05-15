@@ -1,21 +1,17 @@
 import React, {Component, Fragment} from 'react'
 import styled from 'styled-components'
-import AppBar from 'material-ui/AppBar'
 import CircularProgress from 'material-ui/CircularProgress';
+import RaisedButton from 'material-ui/RaisedButton'
+import Snackbar from 'material-ui/Snackbar';
 
 import {Consumer} from 'components/Store'
+import Navigation from 'components/Navigation'
 import WeatherCard from 'components/WeatherCard'
+import StyledWrapper from 'styled/StyledWrapper'
 
-const StyledWrapper = styled.div `
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 1380px;
-    height: calc(100% - 64px);
-    margin: 0 auto;
-    padding: 0 15px;
+const StyledRaisedButton = styled(RaisedButton)`
+    margin: 40px 0;
 `
-
 class Home extends Component {
     showSpinner = () => {
         const {
@@ -30,14 +26,27 @@ class Home extends Component {
     }
 
     render() {
+        const {weather, showMessageWhenNewLocationAdded, saveNewLocation, switchMessageWhenNewLocationIsAdded} = this.props
+
         return (
             <Fragment>
-                <AppBar title="Weather App" showMenuIconButton={false}/>
+                <Navigation/>
                 <StyledWrapper>
                     {this.showSpinner()
                         ? <CircularProgress size={80} thickness={5}/>
-                        : <WeatherCard {...this.props.weather}/>
+                        : <Fragment>
+                            <WeatherCard {...weather}/>
+                            <StyledRaisedButton
+                                label="Save this location"
+                                primary
+                                onClick={() => saveNewLocation(weather)}/>
+                        </Fragment>
 }
+                    <Snackbar
+                        open={showMessageWhenNewLocationAdded}
+                        message="New location saved"
+                        autoHideDuration={2000}
+                        onRequestClose={switchMessageWhenNewLocationIsAdded}/>
                 </StyledWrapper>
             </Fragment>
         )

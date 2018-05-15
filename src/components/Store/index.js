@@ -7,7 +7,11 @@ const DEFAULT_STATE = {
         current: null,
         location: null,
         forecast: null
-    }
+    },
+
+    showMessageWhenNewLocationAdded: false,
+
+    storeLocations: []
 }
 
 const Context = createContext(DEFAULT_STATE)
@@ -38,11 +42,27 @@ export default class Provider extends Component {
 
     }
 
+    switchMessageWhenNewLocationIsAdded = () => {
+        this.setState(prevState => ({
+            showMessageWhenNewLocationAdded: !prevState.showMessageWhenNewLocationAdded
+        }))
+    }
+
+    saveNewLocation = location => {
+        this.setState(prevState => ({
+            storeLocations: [
+                location, ...prevState.storeLocations
+            ]
+        }), this.switchMessageWhenNewLocationIsAdded)
+    }
+
     render() {
         return (
             <Context.Provider
                 value={{
                 getCurrentWeather: this.getCurrentWeather,
+                saveNewLocation: this.saveNewLocation,
+                switchMessageWhenNewLocationIsAdded: this.switchMessageWhenNewLocationIsAdded,
                 ...this.state
             }}>
                 {this.props.children}

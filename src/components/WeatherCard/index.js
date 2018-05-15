@@ -9,6 +9,7 @@ import StyledText from 'styled/StyledText'
 const StyledPaper = styled(Paper)`
     width: 100%;
     height: 85vh;
+    margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
     overflow: hidden;
@@ -23,12 +24,12 @@ const StyledPaper = styled(Paper)`
 const StyledH1 = styled.h1 `
     color: #000;
     font-weight: 600;
-    font-size: 96px;
+    font-size: 92px;
     margin: 0;
     margin-bottom: 20px;
 
     @media screen and (min-width: 600px) {
-        font-size: 72px;
+        font-size: 68px;
         margin: inherit;
     }
 `
