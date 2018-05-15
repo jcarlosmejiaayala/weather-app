@@ -1,13 +1,9 @@
 import React, {Component, createContext} from 'react'
 
-import {getCurrentWeatherService, getForecastWeatherService} from 'lib/apiService'
+import {getCurrentAndForecastWeatherService} from 'lib/apiService'
 
 const DEFAULT_STATE = {
-    currentWeater: {
-        current: null,
-        location: null
-    },
-    forecastWeather: {
+    weather: {
         current: null,
         location: null,
         forecast: null
@@ -30,27 +26,16 @@ export default class Provider extends Component {
     state = DEFAULT_STATE
 
     getCurrentWeather = async() => {
-        const {current, location} = await getCurrentWeatherService()
+        const {current, location, forecast} = await getCurrentAndForecastWeatherService()
 
         this.setState({
-            currentWeater: {
-                current,
-                location
-            }
-        })
-
-    }
-
-    getForecastWeather = async() => {
-        const {current, location, forecast} = await getForecastWeatherService()
-
-        this.setState({
-            forecastWeather: {
+            weather: {
                 current,
                 location,
                 forecast
             }
         })
+
     }
 
     render() {
@@ -58,7 +43,6 @@ export default class Provider extends Component {
             <Context.Provider
                 value={{
                 getCurrentWeather: this.getCurrentWeather,
-                getForecastWeather: this.getForecastWeather,
                 ...this.state
             }}>
                 {this.props.children}

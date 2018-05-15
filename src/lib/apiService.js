@@ -17,12 +17,12 @@ const getCurrentPosition = () => new Promise((resolve, reject) => {
         }) => resolve({latitude, longitude}))
 })
 
-const callToEndpoint = async api => {
+const callToEndpoint = async(api, query = '') => {
     const {latitude, longitude} = await getCurrentPosition()
 
-    return (await fetch(`${api}&q=${latitude},${longitude}`)).json()
+    return (await fetch(`${api}&q=${latitude},${longitude}${query}`)).json()
 }
 
 export const getCurrentWeatherService = async() => await callToEndpoint(API_CURRENT)
 
-export const getForecastWeatherService = async() => await callToEndpoint(API_FORECAST)
+export const getCurrentAndForecastWeatherService = async() => await callToEndpoint(API_FORECAST, '&days=7')
