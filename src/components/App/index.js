@@ -1,6 +1,13 @@
-// eslint-disable-next-line
 import React from "react"
 
-const App = ({children}) => children
+import Store from 'components/Store'
+
+const App = ({children}) => (
+    <Store.Provider>
+        <Store.Consumer>
+            {children}
+        </Store.Consumer>
+    </Store.Provider>
+)
 
 export default App
